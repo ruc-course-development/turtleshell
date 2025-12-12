@@ -1,0 +1,13 @@
+[build-system]
+requires = ["scikit-build-core", "pybind11"]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "proj3"
+version = "0.1.0"
+
+[tool.scikit-build.cmake]
+args = [
+    "-DCMAKE_BUILD_TYPE=Release",
+    "-DDO_PYTHON_INSTALL=On"
+]

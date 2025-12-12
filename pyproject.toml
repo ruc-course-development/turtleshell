@@ -1,0 +1,27 @@
+[project]
+name = "ruc-sci-comp"
+version = "0.1.0"
+description = "Simulation Support Tools"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "bokeh>=3.6.3",
+    "datashader>=0.17.0",
+    "holoviews>=1.20.2",
+    "hvplot>=0.11.2",
+    "matplotlib>=3.10.1",
+    "networkx>=3.4.2",
+    "pandas>=2.2.3",
+    "plotly>=6.0.0",
+    "pyarrow>=22.0.0",
+    "pygithub>=2.7.0",
+    "streamz>=0.6.4",
+    "tables>=3.10.2",
+]
+
+[dependency-groups]
+
+lint = [
+    "mypy>=1.15.0",
+    "ruff>=0.11.0",
+]
