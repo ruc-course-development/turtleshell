@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         curl \
         gdb \
         git \
+        valgrind \
     && rm -rf /var/lib/apt/lists/*
 
 # Install CMake 4.2

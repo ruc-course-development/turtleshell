@@ -1,10 +1,21 @@
-#include <nlohmann/json.hpp>
+#include <benchmark/benchmark.h>
 
-#include <iostream>
+#include <chrono>
+#include <thread>
 
-auto main() -> int {
-    auto j = nlohmann::json{{
-        {"a", 123}
-    }};
-    std::cout << j << std::endl;
+using namespace std::chrono_literals;
+
+auto SomeFunction() -> void{
+    std::this_thread::sleep_for(1ms);
 }
+
+static void BM_SomeFunction(benchmark::State& state) {
+  for (auto _ : state) {
+    SomeFunction();
+  }
+}
+// Register the function as a benchmark
+BENCHMARK(BM_SomeFunction);
+
+// Run the benchmark
+BENCHMARK_MAIN();

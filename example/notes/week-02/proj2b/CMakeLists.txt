@@ -3,11 +3,11 @@ cmake_minimum_required(VERSION 4.2)
 project(proj2)
 
 find_package(nlohmann_json REQUIRED)
-find_package(benchmark CONFIG REQUIRED)
+find_package(gperftools CONFIG REQUIRED)
 
 add_executable(proj2 main.cpp)
 
-target_link_libraries(proj2 PRIVATE benchmark::benchmark nlohmann_json::nlohmann_json)
+target_link_libraries(proj2 PRIVATE gperftools::gperftools nlohmann_json::nlohmann_json)
 
 install(TARGETS proj2
     RUNTIME DESTINATION bin
