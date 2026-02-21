@@ -30,12 +30,13 @@ RUN set -eux; \
     rm /tmp/cmake.sh
 
 # Install uv + Python 3.13 + conan
-RUN --mount=type=bind,source=./.conan,target=/root/.conan  \
+RUN --mount=type=bind,source=./.conan,target=/root/.conan \
+    --mount=type=bind,source=./build_utils,target=./build_utils \
     curl -LsSf https://astral.sh/uv/install.sh | sh \
     && uv python install 3.13 \
     && uv tool install conan \
-    && conan config install /root/.conan/ -tf profiles \
     && conan profile detect --force \
+    && uv run python build_utils/merge_inis.py /root/.conan2/profiles/default /root/.conan/base \
     && rm -rf /root/.cache/uv /root/.cache/pip
 
 WORKDIR /root/home/turtleshell
