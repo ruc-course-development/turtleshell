@@ -4,6 +4,8 @@ LABEL "repository"="https://github.com/ruc-course-development/turtleshell"
 LABEL "homepage"="https://github.com/ruc-course-development/turtleshell"
 LABEL "maintainer"="Lnk2past <Lnk2past@gmail.com>"
 
+ARG TARGETARCH
+
 ENV PATH="/root/.local/bin:${PATH}"
 
 # Install minimal runtime tools
@@ -16,10 +18,16 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Install CMake 4.2
-RUN curl -LsSf https://github.com/Kitware/CMake/releases/download/v4.2.0/cmake-4.2.0-linux-x86_64.sh \
-       -o /tmp/cmake.sh \
-    && bash /tmp/cmake.sh --skip-license --prefix=/usr/local \
-    && rm /tmp/cmake.sh
+RUN set -eux; \
+    case "${TARGETARCH}" in \
+      amd64)  CMAKE_ARCH="x86_64" ;; \
+      arm64)  CMAKE_ARCH="aarch64" ;; \
+      *) echo "Unsupported arch: ${TARGETARCH}" && exit 1 ;; \
+    esac; \
+    curl -LsSf https://github.com/Kitware/CMake/releases/download/v4.2.0/cmake-4.2.0-linux-${CMAKE_ARCH}.sh \
+      -o /tmp/cmake.sh; \
+    bash /tmp/cmake.sh --skip-license --prefix=/usr/local; \
+    rm /tmp/cmake.sh
 
 # Install uv + Python 3.13 + conan
 RUN --mount=type=bind,source=./.conan,target=/root/.conan  \
