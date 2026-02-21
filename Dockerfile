@@ -35,6 +35,7 @@ RUN --mount=type=bind,source=./.conan,target=/root/.conan  \
     && uv python install 3.13 \
     && uv tool install conan \
     && conan config install /root/.conan/ -tf profiles \
+    && conan profile detect --force \
     && rm -rf /root/.cache/uv /root/.cache/pip
 
 WORKDIR /root/home/turtleshell
